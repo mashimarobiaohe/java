@@ -443,6 +443,98 @@ class NestingInterfaces{
 	}
 }
 /*********************  接口与工厂  **********************/
+/**
+ * 想要创建框架
+ * @author Administrator
+ *
+ */
+interface Service{
+	void method1();
+	void method2();
+}
+interface ServiceFactory{
+	Service getService();
+}
+class Implementation1 implements Service{
+	Implementation1(){}
+	public void method1(){}
+	public void method2(){}
+}
+class Implementation1Factory implements ServiceFactory{
+	public Service getService(){
+		return new Implementation1();
+	}
+}
+class Implementation2 implements Service{
+	Implementation2(){}
+	public void method1(){}
+	public void method2(){}
+}
+class Implementation2Factory implements ServiceFactory{
+	public Service getService(){
+		return new Implementation2();
+	}
+}
+class Factories{
+	public static void serviceConsumer(ServiceFactory fact){
+		Service s = fact.getService();
+		s.method1();
+		s.method2();
+	}
+	public static void main(String[] args){
+		serviceConsumer(new Implementation1Factory());
+		serviceConsumer(new Implementation2Factory());
+	}
+}
+
+interface Game_a{
+	boolean move();
+}
+interface GameFactory{
+	Game_a getGame();
+}
+class Checkers implements Game_a{
+	private int moves = 0;
+	private static final int MOVES = 3;
+	public boolean move(){
+		print.print(moves);
+		return ++moves != MOVES;
+	}
+}
+class CheckersFactory implements GameFactory{
+	public Game_a getGame(){
+		return new Checkers();
+	}
+}
+class Chess_a implements Game_a{
+	private int moves = 0;
+	private static final int MOVES = 4;
+	public boolean move(){
+		return ++moves != MOVES;
+	}
+}
+class ChessFactory implements GameFactory{
+	public Game_a getGame(){
+		return new Chess_a();
+	}
+}
+class Games{
+	public static void playGame(GameFactory factory){
+		Game_a s = factory.getGame();
+		while(s.move())
+			;
+	}
+	public static void main(String[] args){
+		playGame(new CheckersFactory());
+		playGame(new ChessFactory());
+	}
+}
+
+
+
+
+
+
 
 
 
